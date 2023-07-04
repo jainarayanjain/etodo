@@ -13,3 +13,6 @@ class Task(models.Model):
     is_completed = models.BooleanField(gettext_lazy("is completed"), default=False)
     created = models.DateTimeField(gettext_lazy("created"), auto_now_add=True)
     updated = models.DateTimeField(gettext_lazy("updated"), auto_now=True)
+
+    def __str__(self):
+        return self.name
