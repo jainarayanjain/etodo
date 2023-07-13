@@ -14,16 +14,14 @@ def email_task() -> None:
     instance = Task.objects.filter(
         created__gte=start, created__lte=end, is_completed=False
     ).first()
-    list_of_task = list(
-        Task.objects.filter(
-            created__gte=start, created__lte=end, is_completed=False
-        ).values("name")
-    )
+    task_list = Task.objects.filter(
+        created__gte=start, created__lte=end, is_completed=False
+    ).values_list("name", flat=True)
 
-    if len(list_of_task) == 0:
+    if len(task_list) == 0:
         return
     subject = "Reminder"
-    body = ''.join(str(elem) for elem in list_of_task)
+    body = ", ".join(elem for elem in task_list)
     to = [instance.user.profile.reviewer_email]
     through_email(subject, body, to)
     Task.objects.all().delete()

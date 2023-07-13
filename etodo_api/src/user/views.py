@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from rest_framework import generics, permissions, viewsets
+from rest_framework import generics, permissions
 from rest_framework.authtoken.models import Token
 
 from user.serializers import (
@@ -34,4 +34,3 @@ class LogoutView(generics.DestroyAPIView):
 
     def get_object(self):
         return self.get_queryset().get(user=self.request.user)
-
