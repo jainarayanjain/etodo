@@ -53,21 +53,21 @@ ALLOWED_HOSTS = literal_eval(CNF.get("DEFAULT", "ALLOWED_HOSTS"))
 # Application definition
 
 INSTALLED_APPS = [
-                     "django.contrib.admin",
-                     "django.contrib.auth",
-                     "django.contrib.contenttypes",
-                     "django.contrib.sessions",
-                     "django.contrib.messages",
-                     "django.contrib.staticfiles",
-                     # Third-party Apps
-                     "rest_framework",
-                     "rest_framework.authtoken",
-                     "django_filters",
-                     "django_celery_beat",
-                     # Custom Apps
-                     "user",
-                     "tracking",
-                 ] + literal_eval(CNF.get("DEFAULT", "INSTALLED_APPS"))
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    # Third-party Apps
+    "rest_framework",
+    "rest_framework.authtoken",
+    "django_filters",
+    "django_celery_beat",
+    # Custom Apps
+    "user",
+    "tracking",
+] + literal_eval(CNF.get("DEFAULT", "INSTALLED_APPS"))
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
