@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     # Third-party Apps
     "rest_framework",
     "rest_framework.authtoken",
+    "guardian",
     "django_filters",
     "django_celery_beat",
     # Custom Apps
@@ -251,7 +252,7 @@ SPECTACULAR_SETTINGS = {
     "CONTACT": {
         "name": "Jai Narayan Jain",
         "email": "jainarayanajain2604@gmail.com",
-        "url": "https://gmail.com",
+        "url": "https://jainarayanjain.github.io",
     },
     "LICENSE": {"name": "Proprietary License"},
 }
