@@ -1,6 +1,6 @@
 FROM python:3.10-slim-bullseye
 
-LABEL maintainer="Jai Jain <jai.jain@acsicorp.com>"
+LABEL maintainer="Jai Jain <jainarayanjain2604@gmail.com>"
 
 WORKDIR /etodo
 

@@ -29,7 +29,7 @@ services:
   beat:
     build: ./etodo_api
     command: bash -c "cd src && celery -A etodo beat --loglevel=info"
-    container_name: "EtodoBeat"
+    container_name: "Etodo-Beat"
     environment:
       ETODO_ENV: ${ETODO_ENV:-development}
     extra_hosts:
@@ -44,13 +44,11 @@ services:
   api:
     build: ./etodo_api
     command: gunicorn etodo.wsgi:application --chdir=/etodo/src -b=0.0.0.0:8000 -w=4 -t=10
-    container_name: "Etodo-Backend"
+    container_name: "Etodo-API"
     environment:
       ETODO_ENV: ${ETODO_ENV:-development}
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    ports:
-     - "8000:8000"
     image: etodo:api
     restart: always
     volumes:
@@ -58,30 +56,29 @@ services:
     depends_on:
       - beat
 
-  # webui:
-  #   build: ./etodo_webui
-  #   command: bash -c "npm run build && npm start"
-  #   container_name: "etodo-Frontend"
-  #   environment:
-  #     NODE_ENV: ${NODE_ENV:-local}
-  #   image: etodo:webui
-  #   restart: always
-  #   volumes:
-  #     - ./etodo_webui:/etodo
-  #     - /etodo/node_modules/
-  #   depends_on:
-  #     - api
+  webui:
+    build: ./etodo_webui
+    command: npm run build
+    container_name: "Etodo-WebUI"
+    environment:
+      NODE_ENV: ${NODE_ENV:-local}
+    image: etodo:webui
+    volumes:
+      - ./etodo_webui:/etodo
+      - /etodo/node_modules/
+    depends_on:
+      - api
 
-  # nginx:
-  #   container_name: "etodo-Nginx"
-  #   image: nginx:latest
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - ./nginx:/etc/nginx/conf.d
-  #     - ./etodo_api/static:/static
-  #     - ./etodo_webui/.next:/.next
-  #     - ./certs:/etc/ssl/certs
-  #   depends_on:
-  #     - webui
+  nginx:
+    container_name: "Etodo-Nginx"
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./etodo_api/static:/static
+      - ./etodo_webui/dist:/var/www/html
+      - ./certs:/etc/ssl/certs
+    depends_on:
+      - webui
